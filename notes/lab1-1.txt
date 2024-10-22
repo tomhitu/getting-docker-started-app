@@ -1,0 +1,8 @@
+1. use the standard https://docs.docker.com/get-started/workshop/02_our_app/ tutorial
+2. if change as the slide, here 3 needs to be edited
+	2.1. Dockerfile: EXPOSE 3000 -> 8080
+	2.2. src/index.js: const port = process.env.PORT || 3000;
+	2.3. src/index.js: app.listen(port, () => console.log(`Listening on port ${port}`));
+3. slide also need add command after each edit:
+	docker build -t bulletinboard:1.0 .
+	docker run -dp 8000:8080 -e PORT=8080 --name bb bulletinboard:1.0

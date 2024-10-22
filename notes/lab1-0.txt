@@ -1,0 +1,153 @@
+Microsoft Windows [版本 10.0.19045.5011]
+(c) Microsoft Corporation。保留所有权利。
+
+C:\Users\legion>docker --version
+Docker version 27.2.0, build 3ab4256
+
+C:\Users\legion>docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+c1ec31eb5944: Download complete
+Digest: sha256:d211f485f2dd1dee407a80973c8f129f00d54604d2c90732e8e320e5038a0348
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+C:\Users\legion>docker images
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+hello-world   latest    d211f485f2dd   17 months ago   24.4kB
+
+C:\Users\legion>docker run hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+
+C:\Users\legion>docker run alpine /bin/echo 'Hello world'
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+43c4264eed91: Download complete
+Digest: sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d
+Status: Downloaded newer image for alpine:latest
+'Hello world'
+
+C:\Users\legion>docker run -d -p 80:80 --name web nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+70850b3ec6b2: Download complete
+11d6fdd0e8a7: Download complete
+a480a496ba95: Download complete
+f3ace1b8ce45: Download complete
+6476794e50f4: Download complete
+40eea07b53d8: Download complete
+f1091da6fd5c: Download complete
+Digest: sha256:28402db69fec7c17e179ea87882667f1e054391138f77ffaf0c3eb388efc3ffb
+Status: Downloaded newer image for nginx:latest
+3cfd688ef9473db7512cca1d4de01b6723a8236c5663e637b89394f4b77cda93
+
+C:\Users\legion>docker network create my_net
+e80ac04e0e8e7f9c0033bb46a063a355015cadb15a6ab4a665a13112e7c433e1
+
+C:\Users\legion>docker run -d -p 80:80 --name web --net=my_net nginx
+docker: Error response from daemon: Conflict. The container name "/web" is already in use by container "3cfd688ef9473db7512cca1d4de01b6723a8236c5663e637b89394f4b77cda93". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+C:\Users\legion>docker run -d -p 80:80 --name web --net=my_net nginx
+docker: Error response from daemon: Conflict. The container name "/web" is already in use by container "3cfd688ef9473db7512cca1d4de01b6723a8236c5663e637b89394f4b77cda93". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+C:\Users\legion>docker rm -f web
+web
+
+C:\Users\legion>docker run -d -p 80:80 --name web --net=my_net nginx
+3d291587e506a9a9b933a1328895c216dba2c34a318e1ac85a6fd944ddde19fc
+
+C:\Users\legion>docker run -i -t --net=my-net --name web_test busybox
+Unable to find image 'busybox:latest' locally
+latest: Pulling from library/busybox
+a46fbb00284b: Download complete
+Digest: sha256:768e5c6f5cb6db0794eec98dc7a967f40631746c32232b78a3105fb946f3ab83
+Status: Downloaded newer image for busybox:latest
+docker: Error response from daemon: network my-net not found.
+
+C:\Users\legion>/ # wget -O - http://web:80/
+'/' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+C:\Users\legion> wget -O - http://web:80/
+'wget' 不是内部或外部命令，也不是可运行的程序
+或批处理文件。
+
+C:\Users\legion>docker rm -f web_test
+web_test
+
+C:\Users\legion>docker run -i -t --net=my_net --name web_test busybox
+/ # wget -O - http://web:80/
+Connecting to web:80 (172.18.0.2:80)
+writing to stdout
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+-                    100% |************************************************************************|   615  0:00:00 ETA
+written to stdout
+/ # exit
+
+C:\Users\legion>
